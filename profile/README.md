@@ -73,7 +73,7 @@ Manage your registries from anywhere. Monitor builds, browse repositories, trigg
 
 <table align="center"><tr>
 <td align="center"><img src="https://github.com/artifact-keeper/.github/raw/main/profile/android-demo.gif" alt="Artifact Keeper Android App" width="280" /><br><sub>Android</sub></td>
-<td align="center"><img src="https://github.com/artifact-keeper/.github/raw/main/profile/ios-demo.gif?v=2" alt="Artifact Keeper iOS App" width="280" /><br><sub>iOS</sub></td>
+<td align="center"><img src="https://github.com/artifact-keeper/.github/raw/main/profile/ios-demo.gif?v=3" alt="Artifact Keeper iOS App" width="280" /><br><sub>iOS</sub></td>
 </tr></table>
 
 ## Web Dashboard
