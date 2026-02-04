@@ -63,7 +63,13 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 Manage your registries from anywhere. Monitor builds, browse repositories, trigger security scans, and administer users — all from native mobile apps with adaptive layouts.
 
-| iOS / macOS | Android |
+### macOS
+
+https://github.com/artifact-keeper/.github/raw/main/profile/macos-demo.mp4
+
+### iOS / Android
+
+| iOS | Android |
 |:---:|:---:|
 | **TODO: Add iOS app gif** | **TODO: Add Android app gif** |
 
