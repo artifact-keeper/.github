@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://artifactkeeper.com/logo-256.png" alt="Artifact Keeper" width="100" />
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/hero.png" alt="Artifact Keeper — Open-source package managers vs. vendor lock-in" width="800" />
 </p>
 
 <h1 align="center">Artifact Keeper</h1>
