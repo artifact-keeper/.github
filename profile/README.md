@@ -30,7 +30,9 @@ A full-featured, enterprise-grade artifact registry you can self-host in minutes
 
 No open-core. No "enterprise edition." No surprise invoices.
 
-**TODO: Add screenshot of web dashboard**
+<p align="center">
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/web-dashboard.png" alt="Artifact Keeper Web Dashboard" width="850" />
+</p>
 
 ## Repositories
 
@@ -80,7 +82,9 @@ Manage your registries from anywhere. Monitor builds, browse repositories, trigg
 
 A full management interface for repositories, packages, security policies, user administration, SSO configuration, replication topology, and operational analytics.
 
-**TODO: Add web dashboard gif**
+<p align="center">
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/web-dashboard.png" alt="Artifact Keeper Web Dashboard" width="850" />
+</p>
 
 ## Quick Start
 
