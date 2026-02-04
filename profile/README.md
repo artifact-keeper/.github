@@ -71,9 +71,15 @@ Manage your registries from anywhere. Monitor builds, browse repositories, trigg
 
 ### iOS / Android
 
-| iOS | Android |
-|:---:|:---:|
-| **TODO: Add iOS app gif** | **TODO: Add Android app gif** |
+### Android
+
+<p align="center">
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/android-demo.gif" alt="Artifact Keeper Android App" width="360" />
+</p>
+
+### iOS
+
+**TODO: Add iOS app gif**
 
 ## Web Dashboard
 
