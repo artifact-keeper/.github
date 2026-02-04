@@ -107,7 +107,7 @@ docker pull ghcr.io/artifact-keeper/artifact-keeper-backend:latest
 docker pull ghcr.io/artifact-keeper/artifact-keeper-web:latest
 ```
 
-Full deployment guides for [Docker](https://artifactkeeper.com/docs/docs/deployment/docker/), [Kubernetes](https://artifactkeeper.com/docs/docs/deployment/kubernetes/), and [AWS](https://artifactkeeper.com/docs/docs/deployment/aws/) are in the docs.
+Full deployment guides for [Docker](https://artifactkeeper.com/docs/deployment/docker/), [Kubernetes](https://artifactkeeper.com/docs/deployment/kubernetes/), and [AWS](https://artifactkeeper.com/docs/deployment/aws/) are in the docs.
 
 ## Architecture
 
