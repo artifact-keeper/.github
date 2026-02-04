@@ -95,34 +95,99 @@ Full deployment guides for [Docker](https://artifactkeeper.com/docs/docs/deploym
 
 ## Architecture
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │              Artifact Keeper                  │
-  Package Managers  │                                              │
-  ─────────────────>│  Rust Backend (Axum)                         │
-  pip, npm, docker, │  45+ native format handlers                  │
-  cargo, helm, ...  │  WASM plugin runtime (Wasmtime)              │
-                    │                                              │
-                    │  ┌────────────┐  ┌─────────────┐  ┌───────┐ │
-                    │  │ PostgreSQL │  │ Meilisearch │  │  S3 / │ │
-                    │  │            │  │             │  │  Disk  │ │
-                    │  └────────────┘  └─────────────┘  └───────┘ │
-                    │                                              │
-                    │  ┌──────────┐  ┌──────────┐                  │
-                    │  │  Trivy   │  │  Grype   │  Security        │
-                    │  │  Scanner │  │  Scanner │  Scanning        │
-                    │  └──────────┘  └──────────┘                  │
-                    └──────────────────────────────────────────────┘
-                           │                    │
-                     ┌─────┴─────┐        ┌─────┴─────┐
-                     │ Edge Node │◄──────►│ Edge Node │  Mesh
-                     │  (Peer)   │  P2P   │  (Peer)   │  Replication
-                     └───────────┘        └───────────┘
+```mermaid
+graph TB
+    subgraph Clients["Clients"]
+        CLI["CLI & Package Managers<br/><sub>pip · npm · docker · cargo<br/>helm · go · maven · ...</sub>"]
+        Web["Web Dashboard<br/><sub>Next.js 15</sub>"]
+        Mobile["Mobile Apps<br/><sub>iOS · Android</sub>"]
+    end
+
+    subgraph Core["Artifact Keeper Backend"]
+        API["REST API Gateway<br/><sub>Rust · Axum</sub>"]
+        Handlers["45+ Format Handlers<br/><sub>Native protocol support</sub>"]
+        WASM["WASM Plugin Runtime<br/><sub>Wasmtime · WIT</sub>"]
+        Auth["Auth Engine<br/><sub>OIDC · LDAP · SAML · JWT</sub>"]
+        Policy["Policy Engine<br/><sub>Severity gates · Quarantine</sub>"]
+    end
+
+    subgraph Data["Data Layer"]
+        PG[("PostgreSQL 16<br/><sub>Metadata & config</sub>")]
+        Storage[("Storage<br/><sub>S3 / Filesystem</sub>")]
+        Meili[("Meilisearch<br/><sub>Full-text search</sub>")]
+    end
+
+    subgraph Security["Security Scanning"]
+        Trivy["Trivy<br/><sub>Container & FS scanning</sub>"]
+        Grype["Grype<br/><sub>Dependency scanning</sub>"]
+    end
+
+    subgraph Edge["Edge Replication"]
+        Peer1["Edge Node"]
+        Peer2["Edge Node"]
+        Peer3["Edge Node"]
+    end
+
+    CLI -->|"Native protocols"| API
+    Web --> API
+    Mobile --> API
+
+    API --> Handlers
+    API --> Auth
+    Handlers --> WASM
+    Handlers --> Policy
+
+    API --> PG
+    Handlers --> Storage
+    API --> Meili
+
+    Policy --> Trivy
+    Policy --> Grype
+
+    API <-->|"Borg Replication"| Peer1
+    API <-->|"Borg Replication"| Peer2
+    API <-->|"Borg Replication"| Peer3
+    Peer1 <-->|"P2P Mesh"| Peer2
+    Peer2 <-->|"P2P Mesh"| Peer3
+    Peer1 <-->|"P2P Mesh"| Peer3
+
+    style Core fill:#1a1a2e,stroke:#e94560,color:#fff
+    style Data fill:#16213e,stroke:#0f3460,color:#fff
+    style Security fill:#1a1a2e,stroke:#e94560,color:#fff
+    style Edge fill:#0f3460,stroke:#533483,color:#fff
+    style Clients fill:#16213e,stroke:#0f3460,color:#fff
+
+    style API fill:#e94560,stroke:#e94560,color:#fff
+    style Handlers fill:#e94560,stroke:#e94560,color:#fff
+    style WASM fill:#533483,stroke:#533483,color:#fff
+    style Auth fill:#e94560,stroke:#e94560,color:#fff
+    style Policy fill:#e94560,stroke:#e94560,color:#fff
+
+    style PG fill:#0f3460,stroke:#0f3460,color:#fff
+    style Storage fill:#0f3460,stroke:#0f3460,color:#fff
+    style Meili fill:#0f3460,stroke:#0f3460,color:#fff
+
+    style Trivy fill:#533483,stroke:#533483,color:#fff
+    style Grype fill:#533483,stroke:#533483,color:#fff
+
+    style Peer1 fill:#533483,stroke:#533483,color:#fff
+    style Peer2 fill:#533483,stroke:#533483,color:#fff
+    style Peer3 fill:#533483,stroke:#533483,color:#fff
+
+    style CLI fill:#0f3460,stroke:#0f3460,color:#fff
+    style Web fill:#0f3460,stroke:#0f3460,color:#fff
+    style Mobile fill:#0f3460,stroke:#0f3460,color:#fff
 ```
 
 ## Contributing
 
 Contributions are welcome. Pick an issue, open a PR, or start a discussion. The backend is Rust, the frontend is TypeScript/React, and the mobile apps are native Swift and Kotlin.
+
+## Support
+
+- Documentation: [artifactkeeper.com/docs](https://artifactkeeper.com/docs/)
+- Email: [support@artifactkeeper.com](mailto:support@artifactkeeper.com)
+- Issues: [GitHub Issues](https://github.com/artifact-keeper/artifact-keeper/issues)
 
 ## License
 
