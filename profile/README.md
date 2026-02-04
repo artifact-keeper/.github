@@ -65,7 +65,9 @@ Manage your registries from anywhere. Monitor builds, browse repositories, trigg
 
 ### macOS
 
-https://github.com/artifact-keeper/.github/raw/main/profile/macos-demo.mp4
+<p align="center">
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/macos-demo.gif" alt="Artifact Keeper macOS App" width="850" />
+</p>
 
 ### iOS / Android
 
