@@ -99,8 +99,9 @@ Full deployment guides for [Docker](https://artifactkeeper.com/docs/docs/deploym
 graph TB
     subgraph Clients["Clients"]
         CLI["CLI & Package Managers<br/><sub>pip · npm · docker · cargo<br/>helm · go · maven · ...</sub>"]
-        Web["Web Dashboard<br/><sub>Next.js 15</sub>"]
-        Mobile["Mobile Apps<br/><sub>iOS · Android</sub>"]
+        WebApp["Web Dashboard<br/><sub>Next.js 15 · Desktop Browser</sub>"]
+        iOS["iPhone · iPad · Mac<br/><sub>SwiftUI · Swift 6</sub>"]
+        Android["Android Phone · Tablet<br/><sub>Jetpack Compose · Kotlin</sub>"]
     end
 
     subgraph Core["Artifact Keeper Backend"]
@@ -129,8 +130,9 @@ graph TB
     end
 
     CLI -->|"Native protocols"| API
-    Web --> API
-    Mobile --> API
+    WebApp --> API
+    iOS --> API
+    Android --> API
 
     API --> Handlers
     API --> Auth
@@ -175,8 +177,9 @@ graph TB
     style Peer3 fill:#533483,stroke:#533483,color:#fff
 
     style CLI fill:#0f3460,stroke:#0f3460,color:#fff
-    style Web fill:#0f3460,stroke:#0f3460,color:#fff
-    style Mobile fill:#0f3460,stroke:#0f3460,color:#fff
+    style WebApp fill:#0f3460,stroke:#0f3460,color:#fff
+    style iOS fill:#0f3460,stroke:#0f3460,color:#fff
+    style Android fill:#0f3460,stroke:#0f3460,color:#fff
 ```
 
 ## Contributing
