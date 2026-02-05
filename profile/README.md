@@ -1,7 +1,9 @@
-<h1 align="center">Artifact Keeper</h1>
+<p align="center">
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/feature-graphic.png" alt="Artifact Keeper - Your packages. Your servers. Your freedom." width="100%" />
+</p>
 
 <p align="center">
-  <strong>The open-source artifact registry. Built for teams that refuse to pay per-seat for package hosting.</strong>
+  <strong>Your packages. Your servers. Your freedom.</strong>
 </p>
 
 <p align="center">
