@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/hero.png" alt="Artifact Keeper — Open-source package managers vs. vendor lock-in" width="800" />
-</p>
-
 <h1 align="center">Artifact Keeper</h1>
 
 <p align="center">
