@@ -34,22 +34,33 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 ## Repositories
 
+### Application
+
 | Repository | Description | Stack |
 |:---|:---|:---|
-| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend server, CLI, and Docker deployment | Rust, Axum, PostgreSQL, Meilisearch |
-| [`artifact-keeper-web`](https://github.com/artifact-keeper/artifact-keeper-web) | Web frontend | Next.js 15, TypeScript, Tailwind CSS, shadcn/ui |
-| [`artifact-keeper-ios`](https://github.com/artifact-keeper/artifact-keeper-ios) | iOS & macOS app | SwiftUI, Swift 6, Alamofire |
-| [`artifact-keeper-android`](https://github.com/artifact-keeper/artifact-keeper-android) | Android app | Jetpack Compose, Kotlin, Material 3 |
-| [`artifact-keeper-api`](https://github.com/artifact-keeper/artifact-keeper-api) | OpenAPI 3.1 spec (165 endpoints) | TypeScript + Rust SDK generation |
-| [`artifact-keeper-example-plugin`](https://github.com/artifact-keeper/artifact-keeper-example-plugin) | Example WASM plugin (Unity .unitypackage) | Rust, WIT, Wasmtime |
+| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend API server with 45+ format handlers, WASM plugin runtime, gRPC, and edge replication | Rust, Axum, SQLx, PostgreSQL, Wasmtime |
+| [`artifact-keeper-web`](https://github.com/artifact-keeper/artifact-keeper-web) | Web dashboard with dark-mode-first design | Next.js 15, TypeScript, Tailwind CSS 4, shadcn/ui |
+| [`artifact-keeper-ios`](https://github.com/artifact-keeper/artifact-keeper-ios) | iOS & macOS native app | SwiftUI, Swift 6, Alamofire |
+| [`artifact-keeper-android`](https://github.com/artifact-keeper/artifact-keeper-android) | Android native app | Jetpack Compose, Kotlin 2.1, Material 3 |
+| [`artifact-keeper-cli`](https://github.com/artifact-keeper/artifact-keeper-cli) | CLI/TUI tool | Rust (planned) |
+
+### Platform & Infrastructure
+
+| Repository | Description | Stack |
+|:---|:---|:---|
+| [`artifact-keeper-iac`](https://github.com/artifact-keeper/artifact-keeper-iac) | Production Helm chart, Terraform modules (EKS/RDS/S3), ArgoCD GitOps, monitoring stack | Helm, Terraform, ArgoCD, Prometheus, Grafana |
+| [`artifact-keeper-api`](https://github.com/artifact-keeper/artifact-keeper-api) | OpenAPI 3.1 spec (277 operations) with auto-generated SDKs | TypeScript, Kotlin, Swift, Rust, Python |
+| [`artifact-keeper-swift-sdk`](https://github.com/artifact-keeper/artifact-keeper-swift-sdk) | Swift Package Manager distribution for generated client SDK | Swift, swift-openapi-generator |
+| [`artifact-keeper-example-plugin`](https://github.com/artifact-keeper/artifact-keeper-example-plugin) | Example WASM plugin template (Unity .unitypackage format) | Rust, WIT, wasm32-wasip1 |
+| [`artifact-keeper-site`](https://github.com/artifact-keeper/artifact-keeper-site) | Documentation & landing page at artifactkeeper.com | Astro, Starlight, MDX |
 
 ## Core Features
 
 **45+ Package Formats** — Native protocol support. Not a generic blob store with format labels. Your package managers (`pip install`, `npm install`, `docker pull`, `cargo add`, `helm install`, `go get`, etc.) talk directly to Artifact Keeper using their native protocols.
 
-**Security Scanning** — Automated vulnerability detection with Trivy and Grype. Policy engine with severity thresholds, quarantine workflows, and scan-before-download enforcement.
+**Security Scanning** — Automated vulnerability detection with [Trivy](https://trivy.dev/) and SBOM analysis with [OWASP Dependency-Track](https://dependencytrack.org/). Policy engine with severity thresholds, quarantine workflows, and scan-before-download enforcement.
 
-**WASM Plugin System** — Extend with custom format handlers via WebAssembly. Ship your own package format support without forking the backend.
+**WASM Plugin System** — Extend with custom format handlers via WebAssembly. Ship your own package format support without forking the backend. Fork the [example plugin](https://github.com/artifact-keeper/artifact-keeper-example-plugin) to get started.
 
 **Edge Replication** — Mesh-based artifact distribution with swarm sync and P2P transfers between nodes. Put caches close to your build agents.
 
@@ -86,26 +97,37 @@ A full management interface for repositories, packages, security policies, user 
 
 ## Quick Start
 
+### Docker Compose (fastest)
+
 ```bash
-# Clone and start with Docker Compose
 git clone https://github.com/artifact-keeper/artifact-keeper.git
 cd artifact-keeper
 docker compose up -d
 
-# That's it. Visit http://localhost:9080
+# Visit http://localhost:9080
 ```
 
-Or pull the pre-built images directly:
+### Kubernetes (Helm)
 
 ```bash
-# Backend (required)
-docker pull ghcr.io/artifact-keeper/artifact-keeper-backend:latest
+git clone https://github.com/artifact-keeper/artifact-keeper-iac.git
+cd artifact-keeper-iac
 
-# Web dashboard (recommended)
+helm install ak helm/ \
+  --namespace artifact-keeper \
+  --create-namespace
+```
+
+See the [Helm deployment guide](https://artifactkeeper.com/docs/deployment/helm/) for production configuration with external PostgreSQL, TLS, autoscaling, and monitoring.
+
+### Pre-built Images
+
+```bash
+docker pull ghcr.io/artifact-keeper/artifact-keeper-backend:latest
 docker pull ghcr.io/artifact-keeper/artifact-keeper-web:latest
 ```
 
-Full deployment guides for [Docker](https://artifactkeeper.com/docs/deployment/docker/), [Kubernetes](https://artifactkeeper.com/docs/deployment/kubernetes/), and [AWS](https://artifactkeeper.com/docs/deployment/aws/) are in the docs.
+Full deployment guides: [Docker](https://artifactkeeper.com/docs/deployment/docker/) · [Kubernetes](https://artifactkeeper.com/docs/deployment/kubernetes/) · [Helm](https://artifactkeeper.com/docs/deployment/helm/) · [AWS](https://artifactkeeper.com/docs/deployment/aws/)
 
 ## Architecture
 
@@ -119,7 +141,7 @@ graph TB
     end
 
     subgraph Core["Artifact Keeper Backend"]
-        API["REST API Gateway<br/><sub>Rust · Axum</sub>"]
+        API["REST & gRPC Gateway<br/><sub>Rust · Axum · Tonic</sub>"]
         Handlers["45+ Format Handlers<br/><sub>Native protocol support</sub>"]
         WASM["WASM Plugin Runtime<br/><sub>Wasmtime · WIT</sub>"]
         Auth["Auth Engine<br/><sub>OIDC · LDAP · SAML · JWT</sub>"]
@@ -133,14 +155,21 @@ graph TB
     end
 
     subgraph Security["Security Scanning"]
-        Trivy["Trivy<br/><sub>Container & FS scanning</sub>"]
-        Grype["Grype<br/><sub>Dependency scanning</sub>"]
+        Trivy["Trivy<br/><sub>Vulnerability scanning</sub>"]
+        DTrack["Dependency-Track<br/><sub>SBOM analysis</sub>"]
     end
 
     subgraph Edge["Edge Replication"]
         Peer1["Edge Node"]
         Peer2["Edge Node"]
         Peer3["Edge Node"]
+    end
+
+    subgraph Infra["Infrastructure (IaC)"]
+        Helm["Helm Chart"]
+        TF["Terraform<br/><sub>EKS · RDS · S3 · VPC</sub>"]
+        ArgoCD["ArgoCD<br/><sub>GitOps</sub>"]
+        Mon["Prometheus + Grafana<br/><sub>Monitoring & Alerts</sub>"]
     end
 
     CLI -->|"Native protocols"| API
@@ -158,7 +187,7 @@ graph TB
     API --> Meili
 
     Policy --> Trivy
-    Policy --> Grype
+    Policy --> DTrack
 
     API <-->|"Borg Replication"| Peer1
     API <-->|"Borg Replication"| Peer2
@@ -167,11 +196,18 @@ graph TB
     Peer2 <-->|"P2P Mesh"| Peer3
     Peer1 <-->|"P2P Mesh"| Peer3
 
+    Helm -.->|deploys| Core
+    ArgoCD -.->|watches| Helm
+    TF -.->|provisions| PG
+    TF -.->|provisions| Storage
+    Mon -.->|scrapes| API
+
     style Core fill:#1a1a2e,stroke:#e94560,color:#fff
     style Data fill:#16213e,stroke:#0f3460,color:#fff
     style Security fill:#1a1a2e,stroke:#e94560,color:#fff
     style Edge fill:#0f3460,stroke:#533483,color:#fff
     style Clients fill:#16213e,stroke:#0f3460,color:#fff
+    style Infra fill:#0f3460,stroke:#22c55e,color:#fff
 
     style API fill:#e94560,stroke:#e94560,color:#fff
     style Handlers fill:#e94560,stroke:#e94560,color:#fff
@@ -184,17 +220,57 @@ graph TB
     style Meili fill:#0f3460,stroke:#0f3460,color:#fff
 
     style Trivy fill:#533483,stroke:#533483,color:#fff
-    style Grype fill:#533483,stroke:#533483,color:#fff
+    style DTrack fill:#533483,stroke:#533483,color:#fff
 
     style Peer1 fill:#533483,stroke:#533483,color:#fff
     style Peer2 fill:#533483,stroke:#533483,color:#fff
     style Peer3 fill:#533483,stroke:#533483,color:#fff
+
+    style Helm fill:#22c55e,stroke:#22c55e,color:#fff
+    style TF fill:#22c55e,stroke:#22c55e,color:#fff
+    style ArgoCD fill:#22c55e,stroke:#22c55e,color:#fff
+    style Mon fill:#22c55e,stroke:#22c55e,color:#fff
 
     style CLI fill:#0f3460,stroke:#0f3460,color:#fff
     style WebApp fill:#0f3460,stroke:#0f3460,color:#fff
     style iOS fill:#0f3460,stroke:#0f3460,color:#fff
     style Android fill:#0f3460,stroke:#0f3460,color:#fff
 ```
+
+## Deployment Options
+
+```mermaid
+graph LR
+    subgraph DEV["Development"]
+        D1["Docker Compose<br/><sub>Single machine</sub>"]
+        D2["Helm (dev values)<br/><sub>Local K8s cluster</sub>"]
+    end
+
+    subgraph STG["Staging"]
+        S1["Helm + ArgoCD<br/><sub>Auto-sync</sub>"]
+        S2["In-cluster PostgreSQL<br/><sub>HPA · PDB · NetworkPolicy</sub>"]
+    end
+
+    subgraph PROD["Production"]
+        P1["Helm + ArgoCD<br/><sub>Manual sync</sub>"]
+        P2["EKS + RDS + S3<br/><sub>Terraform provisioned</sub>"]
+        P3["Prometheus + Grafana<br/><sub>12-panel dashboard · 7 alerts</sub>"]
+    end
+
+    DEV --> STG --> PROD
+
+    style DEV fill:#22c55e,color:#fff
+    style STG fill:#eab308,color:#fff
+    style PROD fill:#ef4444,color:#fff
+```
+
+| Path | Best For | Guide |
+|---|---|---|
+| **Docker Compose** | Local development, demos, small teams | [Docs](https://artifactkeeper.com/docs/deployment/docker/) |
+| **Helm Chart** | Kubernetes deployments, any environment | [Docs](https://artifactkeeper.com/docs/deployment/helm/) |
+| **Terraform + Helm** | Production on AWS (EKS, RDS, S3) | [IaC Repo](https://github.com/artifact-keeper/artifact-keeper-iac) |
+| **Raw K8s Manifests** | Single-node Kubernetes, learning | [Docs](https://artifactkeeper.com/docs/deployment/kubernetes/) |
+| **AWS EC2** | Single-instance production | [Docs](https://artifactkeeper.com/docs/deployment/aws/) |
 
 ## Contributing
 
@@ -205,6 +281,10 @@ Contributions are welcome. Pick an issue, open a PR, or start a discussion. The 
 - Documentation: [artifactkeeper.com/docs](https://artifactkeeper.com/docs/)
 - Email: [support@artifactkeeper.com](mailto:support@artifactkeeper.com)
 - Issues: [GitHub Issues](https://github.com/artifact-keeper/artifact-keeper/issues)
+
+## Open-Source Credits
+
+Security scanning powered by [Trivy](https://trivy.dev/) (Aqua Security) and [OWASP Dependency-Track](https://dependencytrack.org/). Search powered by [Meilisearch](https://www.meilisearch.com/). Built on [PostgreSQL](https://www.postgresql.org/).
 
 ## License
 
