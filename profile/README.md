@@ -18,6 +18,7 @@
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   <img src="https://img.shields.io/badge/package%20formats-45%2B-green.svg" alt="45+ Formats" />
   <img src="https://img.shields.io/badge/rust-1.75%2B-orange.svg" alt="Rust" />
+  <a href="https://ko-fi.com/bsgeraci"><img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 </p>
 
 ---
