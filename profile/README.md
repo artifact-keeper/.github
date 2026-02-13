@@ -39,7 +39,7 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 | Repository | Description | Stack |
 |:---|:---|:---|
-| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend API server with 45+ format handlers, WASM plugin runtime, gRPC, and edge replication | Rust, Axum, SQLx, PostgreSQL, Wasmtime |
+| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend API server with 45+ format handlers, WASM plugin runtime, gRPC, and mesh replication | Rust, Axum, SQLx, PostgreSQL, Wasmtime |
 | [`artifact-keeper-web`](https://github.com/artifact-keeper/artifact-keeper-web) | Web dashboard with dark-mode-first design | Next.js 15, TypeScript, Tailwind CSS 4, shadcn/ui |
 | [`artifact-keeper-ios`](https://github.com/artifact-keeper/artifact-keeper-ios) | iOS & macOS native app | SwiftUI, Swift 6, Alamofire |
 | [`artifact-keeper-android`](https://github.com/artifact-keeper/artifact-keeper-android) | Android native app | Jetpack Compose, Kotlin 2.1, Material 3 |
@@ -57,15 +57,21 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 ## Core Features
 
-**45+ Package Formats** — Native protocol support. Not a generic blob store with format labels. Your package managers (`pip install`, `npm install`, `docker pull`, `cargo add`, `helm install`, `go get`, etc.) talk directly to Artifact Keeper using their native protocols.
+**45+ Package Formats** — Native protocol support. Not a generic blob store with format labels. Your package managers (`pip install`, `npm install`, `docker pull`, `cargo add`, `helm install`, `go get`, `buf push`, etc.) talk directly to Artifact Keeper using their native protocols.
 
-**Security Scanning** — Automated vulnerability detection with [Trivy](https://trivy.dev/) and SBOM analysis with [OWASP Dependency-Track](https://dependencytrack.org/). Policy engine with severity thresholds, quarantine workflows, and scan-before-download enforcement.
+**Proxy & Virtual Repositories** — **Proxy** repos cache artifacts from public registries (npmjs.com, PyPI, Maven Central, Docker Hub) on first request. **Virtual** repos aggregate multiple local and proxy repos behind a single URL with configurable resolution order. Your build tools point at one endpoint; Artifact Keeper resolves from your private packages first, then falls back to public registries.
+
+**Security & Compliance** — Automated vulnerability detection with [Trivy](https://trivy.dev/), SBOM analysis with [OWASP Dependency-Track](https://dependencytrack.org/), and compliance auditing with [OpenSCAP](https://www.open-scap.org/). Policy engine with quality gates, severity thresholds, quarantine workflows, and scan-before-download enforcement.
+
+**Artifact Signing** — GPG and PGP signing with key management. Sign artifacts on upload, verify signatures on download. Import existing signing keys or generate new ones through the API.
 
 **WASM Plugin System** — Extend with custom format handlers via WebAssembly. Ship your own package format support without forking the backend. Fork the [example plugin](https://github.com/artifact-keeper/artifact-keeper-example-plugin) to get started.
 
-**Edge Replication** — Mesh-based artifact distribution with swarm sync and P2P transfers between nodes. Put caches close to your build agents.
+**Peer Replication** — Mesh-based artifact distribution with label-based sync policies, reactive subscriptions, and P2P transfers between peers. Put caches close to your build agents.
 
 **SSO & Multi-Auth** — OpenID Connect, LDAP, SAML 2.0, JWT, and API tokens. RBAC with per-repository permissions.
+
+**Observability** — Prometheus metrics (30+ `ak_*` gauges, counters, histograms), opt-in OpenTelemetry distributed tracing (OTLP export to Jaeger/Tempo/Datadog), Kubernetes-native health probes (`/livez`, `/readyz`, `/healthz`), and DB connection pool monitoring.
 
 **Artifactory Migration** — Built-in tooling to migrate repositories, artifacts, users, and permissions from JFrog Artifactory. One command.
 
@@ -130,47 +136,86 @@ docker pull ghcr.io/artifact-keeper/artifact-keeper-web:latest
 
 Full deployment guides: [Docker](https://artifactkeeper.com/docs/deployment/docker/) · [Kubernetes](https://artifactkeeper.com/docs/deployment/kubernetes/) · [Helm](https://artifactkeeper.com/docs/deployment/helm/) · [AWS](https://artifactkeeper.com/docs/deployment/aws/)
 
+## Repository Types
+
+Artifact Keeper supports three repository types — the same model used by JFrog Artifactory and Sonatype Nexus:
+
+| Type | Purpose | Example |
+|---|---|---|
+| **Local** | Host your own packages. Publish and download artifacts you build. | `my-npm-private` |
+| **Proxy** | Cache packages from public registries. First request fetches upstream; subsequent requests served from cache. | `npm-proxy` -> npmjs.com |
+| **Virtual** | Aggregate multiple repos behind a single URL. Resolves in order: local repos first, then proxy repos. | `npm-all` = `my-npm-private` + `npm-proxy` |
+
+### Proxy Examples
+
+```bash
+# npm: proxy to npmjs.com
+npm install react --registry http://localhost:8080/api/v1/npm/npm-proxy/
+
+# pip: proxy to pypi.org
+pip install flask --index-url http://localhost:8080/api/v1/pypi/pypi-proxy/simple/
+
+# Docker: proxy to Docker Hub
+docker pull localhost:8080/api/v1/docker/docker-proxy/library/nginx:latest
+
+# Go: proxy to proxy.golang.org
+GOPROXY=http://localhost:8080/api/v1/go/go-proxy go get github.com/gin-gonic/gin
+```
+
 ## Architecture
 
 ```mermaid
 graph TB
     subgraph Clients["Clients"]
-        CLI["CLI & Package Managers<br/><sub>pip · npm · docker · cargo<br/>helm · go · maven · ...</sub>"]
+        CLI["CLI & Package Managers<br/><sub>pip · npm · docker · cargo<br/>helm · go · maven · buf · ...</sub>"]
         WebApp["Web Dashboard<br/><sub>Next.js 15 · Desktop Browser</sub>"]
         iOS["iPhone · iPad · Mac<br/><sub>SwiftUI · Swift 6</sub>"]
         Android["Android Phone · Tablet<br/><sub>Jetpack Compose · Kotlin</sub>"]
     end
 
+    subgraph Upstream["Public Registries (Proxy Upstream)"]
+        NPMjs["npmjs.com"]
+        PyPIorg["pypi.org"]
+        DockerHub["Docker Hub"]
+        MavenCentral["Maven Central"]
+    end
+
     subgraph Core["Artifact Keeper Backend"]
         API["REST & gRPC Gateway<br/><sub>Rust · Axum · Tonic</sub>"]
-        Handlers["45+ Format Handlers<br/><sub>Native protocol support</sub>"]
+        Handlers["45+ Format Handlers<br/><sub>Local · Proxy · Virtual repos</sub>"]
         WASM["WASM Plugin Runtime<br/><sub>Wasmtime · WIT</sub>"]
         Auth["Auth Engine<br/><sub>OIDC · LDAP · SAML · JWT</sub>"]
-        Policy["Policy Engine<br/><sub>Severity gates · Quarantine</sub>"]
+        Policy["Policy Engine<br/><sub>Quality gates · Signing · Quarantine</sub>"]
     end
 
     subgraph Data["Data Layer"]
         PG[("PostgreSQL 16<br/><sub>Metadata & config</sub>")]
-        Storage[("Storage<br/><sub>S3 / Filesystem</sub>")]
+        Storage[("Storage<br/><sub>S3 / GCS / Filesystem</sub>")]
         Meili[("Meilisearch<br/><sub>Full-text search</sub>")]
     end
 
-    subgraph Security["Security Scanning"]
+    subgraph Security["Security & Compliance"]
         Trivy["Trivy<br/><sub>Vulnerability scanning</sub>"]
         DTrack["Dependency-Track<br/><sub>SBOM analysis</sub>"]
+        OpenSCAP["OpenSCAP<br/><sub>Compliance auditing</sub>"]
     end
 
-    subgraph Edge["Edge Replication"]
-        Peer1["Edge Node"]
-        Peer2["Edge Node"]
-        Peer3["Edge Node"]
+    subgraph Observe["Observability"]
+        Prom["Prometheus<br/><sub>30+ ak_* metrics</sub>"]
+        OTel["OpenTelemetry<br/><sub>OTLP traces · Jaeger · Tempo</sub>"]
+        Grafana["Grafana<br/><sub>Dashboards & Alerts</sub>"]
+    end
+
+    subgraph Edge["Peer Replication"]
+        Peer1["Peer Node"]
+        Peer2["Peer Node"]
+        Peer3["Peer Node"]
     end
 
     subgraph Infra["Infrastructure (IaC)"]
         Helm["Helm Chart"]
         TF["Terraform<br/><sub>EKS · RDS · S3 · VPC</sub>"]
         ArgoCD["ArgoCD<br/><sub>GitOps</sub>"]
-        Mon["Prometheus + Grafana<br/><sub>Monitoring & Alerts</sub>"]
     end
 
     CLI -->|"Native protocols"| API
@@ -182,6 +227,7 @@ graph TB
     API --> Auth
     Handlers --> WASM
     Handlers --> Policy
+    Handlers -->|"Proxy cache"| Upstream
 
     API --> PG
     Handlers --> Storage
@@ -189,26 +235,32 @@ graph TB
 
     Policy --> Trivy
     Policy --> DTrack
+    Policy --> OpenSCAP
 
-    API <-->|"Borg Replication"| Peer1
-    API <-->|"Borg Replication"| Peer2
-    API <-->|"Borg Replication"| Peer3
-    Peer1 <-->|"P2P Mesh"| Peer2
-    Peer2 <-->|"P2P Mesh"| Peer3
-    Peer1 <-->|"P2P Mesh"| Peer3
+    Prom -->|"Scrapes /metrics"| API
+    OTel -->|"OTLP gRPC"| API
+    Grafana --> Prom
+
+    API <-->|"Mesh Replication"| Peer1
+    API <-->|"Mesh Replication"| Peer2
+    API <-->|"Mesh Replication"| Peer3
+    Peer1 <-->|"P2P"| Peer2
+    Peer2 <-->|"P2P"| Peer3
+    Peer1 <-->|"P2P"| Peer3
 
     Helm -.->|deploys| Core
     ArgoCD -.->|watches| Helm
     TF -.->|provisions| PG
     TF -.->|provisions| Storage
-    Mon -.->|scrapes| API
 
     style Core fill:#1a1a2e,stroke:#e94560,color:#fff
     style Data fill:#16213e,stroke:#0f3460,color:#fff
     style Security fill:#1a1a2e,stroke:#e94560,color:#fff
+    style Observe fill:#16213e,stroke:#22c55e,color:#fff
     style Edge fill:#0f3460,stroke:#533483,color:#fff
     style Clients fill:#16213e,stroke:#0f3460,color:#fff
     style Infra fill:#0f3460,stroke:#22c55e,color:#fff
+    style Upstream fill:#16213e,stroke:#0f3460,color:#fff
 
     style API fill:#e94560,stroke:#e94560,color:#fff
     style Handlers fill:#e94560,stroke:#e94560,color:#fff
@@ -222,6 +274,11 @@ graph TB
 
     style Trivy fill:#533483,stroke:#533483,color:#fff
     style DTrack fill:#533483,stroke:#533483,color:#fff
+    style OpenSCAP fill:#533483,stroke:#533483,color:#fff
+
+    style Prom fill:#22c55e,stroke:#22c55e,color:#fff
+    style OTel fill:#22c55e,stroke:#22c55e,color:#fff
+    style Grafana fill:#22c55e,stroke:#22c55e,color:#fff
 
     style Peer1 fill:#533483,stroke:#533483,color:#fff
     style Peer2 fill:#533483,stroke:#533483,color:#fff
@@ -230,12 +287,16 @@ graph TB
     style Helm fill:#22c55e,stroke:#22c55e,color:#fff
     style TF fill:#22c55e,stroke:#22c55e,color:#fff
     style ArgoCD fill:#22c55e,stroke:#22c55e,color:#fff
-    style Mon fill:#22c55e,stroke:#22c55e,color:#fff
 
     style CLI fill:#0f3460,stroke:#0f3460,color:#fff
     style WebApp fill:#0f3460,stroke:#0f3460,color:#fff
     style iOS fill:#0f3460,stroke:#0f3460,color:#fff
     style Android fill:#0f3460,stroke:#0f3460,color:#fff
+
+    style NPMjs fill:#0f3460,stroke:#0f3460,color:#fff
+    style PyPIorg fill:#0f3460,stroke:#0f3460,color:#fff
+    style DockerHub fill:#0f3460,stroke:#0f3460,color:#fff
+    style MavenCentral fill:#0f3460,stroke:#0f3460,color:#fff
 ```
 
 ## Deployment Options
@@ -285,7 +346,7 @@ Contributions are welcome. Pick an issue, open a PR, or start a discussion. The 
 
 ## Open-Source Credits
 
-Security scanning powered by [Trivy](https://trivy.dev/) (Aqua Security) and [OWASP Dependency-Track](https://dependencytrack.org/). Search powered by [Meilisearch](https://www.meilisearch.com/). Built on [PostgreSQL](https://www.postgresql.org/).
+Security scanning powered by [Trivy](https://trivy.dev/) (Aqua Security), [OWASP Dependency-Track](https://dependencytrack.org/), and [OpenSCAP](https://www.open-scap.org/). Distributed tracing via [OpenTelemetry](https://opentelemetry.io/). Search powered by [Meilisearch](https://www.meilisearch.com/). Built on [PostgreSQL](https://www.postgresql.org/).
 
 ## License
 
