@@ -62,7 +62,7 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 **Proxy & Virtual Repositories** — **Proxy** repos cache artifacts from public registries (npmjs.com, PyPI, Maven Central, Docker Hub) on first request. **Virtual** repos aggregate multiple local and proxy repos behind a single URL with configurable resolution order. Your build tools point at one endpoint; Artifact Keeper resolves from your private packages first, then falls back to public registries.
 
-**Security & Compliance** — Automated vulnerability detection with [Trivy](https://trivy.dev/), SBOM analysis with [OWASP Dependency-Track](https://dependencytrack.org/), and compliance auditing with [OpenSCAP](https://www.open-scap.org/). Policy engine with quality gates, severity thresholds, quarantine workflows, and scan-before-download enforcement.
+**Security & Compliance** — All container images built on [DISA STIG](https://www.cyber.mil/stigs/)-approved Red Hat UBI 9 base images with non-root execution and minimal attack surface. Automated vulnerability detection with [Trivy](https://trivy.dev/), SBOM analysis with [OWASP Dependency-Track](https://dependencytrack.org/), and compliance auditing with [OpenSCAP](https://www.open-scap.org/). Policy engine with quality gates, severity thresholds, quarantine workflows, and scan-before-download enforcement.
 
 **Artifact Signing** — GPG and PGP signing with key management. Sign artifacts on upload, verify signatures on download. Import existing signing keys or generate new ones through the API.
 
