@@ -18,6 +18,7 @@
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
   <img src="https://img.shields.io/badge/package%20formats-45%2B-green.svg" alt="45+ Formats" />
   <img src="https://img.shields.io/badge/rust-1.75%2B-orange.svg" alt="Rust" />
+  <a href="https://sonarcloud.io/summary/overall?id=artifact-keeper_artifact-keeper"><img src="https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper&metric=alert_status" alt="Quality Gate" /></a>
   <a href="https://ko-fi.com/bsgeraci"><img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 </p>
 
@@ -37,23 +38,23 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 ### Application
 
-| Repository | Description | Stack |
-|:---|:---|:---|
-| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend API server with 45+ format handlers, WASM plugin runtime, gRPC, and mesh replication | Rust, Axum, SQLx, PostgreSQL, Wasmtime |
-| [`artifact-keeper-web`](https://github.com/artifact-keeper/artifact-keeper-web) | Web dashboard with dark-mode-first design | Next.js 15, TypeScript, Tailwind CSS 4, shadcn/ui |
-| [`artifact-keeper-ios`](https://github.com/artifact-keeper/artifact-keeper-ios) | iOS & macOS native app | SwiftUI, Swift 6, Alamofire |
-| [`artifact-keeper-android`](https://github.com/artifact-keeper/artifact-keeper-android) | Android native app | Jetpack Compose, Kotlin 2.1, Material 3 |
-| [`artifact-keeper-cli`](https://github.com/artifact-keeper/artifact-keeper-cli) | CLI/TUI tool | Rust (planned) |
+| Repository | Description | Stack | Quality |
+|:---|:---|:---|:---:|
+| [`artifact-keeper`](https://github.com/artifact-keeper/artifact-keeper) | Backend API server with 45+ format handlers, WASM plugin runtime, gRPC, and mesh replication | Rust, Axum, SQLx, PostgreSQL, Wasmtime | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper) |
+| [`artifact-keeper-web`](https://github.com/artifact-keeper/artifact-keeper-web) | Web dashboard with dark-mode-first design | Next.js 15, TypeScript, Tailwind CSS 4, shadcn/ui | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-web&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-web) |
+| [`artifact-keeper-ios`](https://github.com/artifact-keeper/artifact-keeper-ios) | iOS & macOS native app | SwiftUI, Swift 6, Alamofire | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-ios&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-ios) |
+| [`artifact-keeper-android`](https://github.com/artifact-keeper/artifact-keeper-android) | Android native app | Jetpack Compose, Kotlin 2.1, Material 3 | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-android&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-android) |
+| [`artifact-keeper-cli`](https://github.com/artifact-keeper/artifact-keeper-cli) | CLI/TUI tool | Rust (planned) | — |
 
 ### Platform & Infrastructure
 
-| Repository | Description | Stack |
-|:---|:---|:---|
-| [`artifact-keeper-iac`](https://github.com/artifact-keeper/artifact-keeper-iac) | Production Helm chart, Terraform modules (EKS/RDS/S3), ArgoCD GitOps, monitoring stack | Helm, Terraform, ArgoCD, Prometheus, Grafana |
-| [`artifact-keeper-api`](https://github.com/artifact-keeper/artifact-keeper-api) | OpenAPI 3.1 spec (277 operations) with auto-generated SDKs | TypeScript, Kotlin, Swift, Rust, Python |
-| [`artifact-keeper-swift-sdk`](https://github.com/artifact-keeper/artifact-keeper-swift-sdk) | Swift Package Manager distribution for generated client SDK | Swift, swift-openapi-generator |
-| [`artifact-keeper-example-plugin`](https://github.com/artifact-keeper/artifact-keeper-example-plugin) | Example WASM plugin template (Unity .unitypackage format) | Rust, WIT, wasm32-wasip1 |
-| [`artifact-keeper-site`](https://github.com/artifact-keeper/artifact-keeper-site) | Documentation & landing page at artifactkeeper.com | Astro, Starlight, MDX |
+| Repository | Description | Stack | Quality |
+|:---|:---|:---|:---:|
+| [`artifact-keeper-iac`](https://github.com/artifact-keeper/artifact-keeper-iac) | Production Helm chart, Terraform modules (EKS/RDS/S3), ArgoCD GitOps, monitoring stack | Helm, Terraform, ArgoCD, Prometheus, Grafana | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-iac&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-iac) |
+| [`artifact-keeper-api`](https://github.com/artifact-keeper/artifact-keeper-api) | OpenAPI 3.1 spec (277 operations) with auto-generated SDKs | TypeScript, Kotlin, Swift, Rust, Python | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-api&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-api) |
+| [`artifact-keeper-swift-sdk`](https://github.com/artifact-keeper/artifact-keeper-swift-sdk) | Swift Package Manager distribution for generated client SDK | Swift, swift-openapi-generator | [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper-swift-sdk&metric=alert_status&token=)](https://sonarcloud.io/dashboard?id=artifact-keeper_artifact-keeper-swift-sdk) |
+| [`artifact-keeper-example-plugin`](https://github.com/artifact-keeper/artifact-keeper-example-plugin) | Example WASM plugin template (Unity .unitypackage format) | Rust, WIT, wasm32-wasip1 | — |
+| [`artifact-keeper-site`](https://github.com/artifact-keeper/artifact-keeper-site) | Documentation & landing page at artifactkeeper.com | Astro, Starlight, MDX | — |
 
 ## Core Features
 
