@@ -78,6 +78,10 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 **Full-Text Search** — Meilisearch-powered search across all repositories, packages, and artifact metadata.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/chart?repos=artifact-keeper/artifact-keeper&type=date&legend=top-left)](https://www.star-history.com/?repos=artifact-keeper%2Fartifact-keeper&type=date&legend=top-left)
+
 ## Mobile Apps
 
 Manage your registries from anywhere. Monitor builds, browse repositories, trigger security scans, and administer users — all from native mobile apps with adaptive layouts.
