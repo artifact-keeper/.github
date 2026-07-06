@@ -80,7 +80,13 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/chart?repos=artifact-keeper/artifact-keeper&type=date&legend=top-left)](https://www.star-history.com/?repos=artifact-keeper%2Fartifact-keeper&type=date&legend=top-left)
+<a href="https://www.star-history.com/?repos=artifact-keeper%2Fartifact-keeper&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=artifact-keeper/artifact-keeper&type=date&theme=dark&legend=top-left&sealed_token=E052xgK5R9NDgPiS70Agz1Q7lLG00krbcxsFRMno2gBnim9bm77lR4Dm8FKjmqizXb8nQvZjRAxwJqgqxIIQj2N-kQOxXQhDzzTFPz3csIautEA1SEzMMxDiRshY4I1bZr-vR5FC1Ih8X_3tFqGwKMLd6OafUghfZ4743_XbSb8wtgdLJYI4wXTxKt09" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=artifact-keeper/artifact-keeper&type=date&legend=top-left&sealed_token=E052xgK5R9NDgPiS70Agz1Q7lLG00krbcxsFRMno2gBnim9bm77lR4Dm8FKjmqizXb8nQvZjRAxwJqgqxIIQj2N-kQOxXQhDzzTFPz3csIautEA1SEzMMxDiRshY4I1bZr-vR5FC1Ih8X_3tFqGwKMLd6OafUghfZ4743_XbSb8wtgdLJYI4wXTxKt09" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=artifact-keeper/artifact-keeper&type=date&legend=top-left&sealed_token=E052xgK5R9NDgPiS70Agz1Q7lLG00krbcxsFRMno2gBnim9bm77lR4Dm8FKjmqizXb8nQvZjRAxwJqgqxIIQj2N-kQOxXQhDzzTFPz3csIautEA1SEzMMxDiRshY4I1bZr-vR5FC1Ih8X_3tFqGwKMLd6OafUghfZ4743_XbSb8wtgdLJYI4wXTxKt09" />
+ </picture>
+</a>
 
 ## Mobile Apps
 
