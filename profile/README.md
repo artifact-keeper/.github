@@ -76,7 +76,7 @@ No open-core. No "enterprise edition." No surprise invoices.
 
 **Artifactory Migration** — Built-in tooling to migrate repositories, artifacts, users, and permissions from JFrog Artifactory. One command.
 
-**Full-Text Search** — Meilisearch-powered search across all repositories, packages, and artifact metadata.
+**Full-Text Search** — OpenSearch-powered search across all repositories, packages, and artifact metadata.
 
 ## Star History
 
@@ -202,7 +202,7 @@ graph TB
     subgraph Data["Data Layer"]
         PG[("PostgreSQL 16<br/><sub>Metadata & config</sub>")]
         Storage[("Storage<br/><sub>S3 / GCS / Filesystem</sub>")]
-        Meili[("Meilisearch<br/><sub>Full-text search</sub>")]
+        Search[("OpenSearch<br/><sub>Full-text search</sub>")]
     end
 
     subgraph Security["Security & Compliance"]
@@ -242,7 +242,7 @@ graph TB
 
     API --> PG
     Handlers --> Storage
-    API --> Meili
+    API --> Search
 
     Policy --> Trivy
     Policy --> DTrack
@@ -281,7 +281,7 @@ graph TB
 
     style PG fill:#0f3460,stroke:#0f3460,color:#fff
     style Storage fill:#0f3460,stroke:#0f3460,color:#fff
-    style Meili fill:#0f3460,stroke:#0f3460,color:#fff
+    style Search fill:#0f3460,stroke:#0f3460,color:#fff
 
     style Trivy fill:#533483,stroke:#533483,color:#fff
     style DTrack fill:#533483,stroke:#533483,color:#fff
@@ -356,7 +356,7 @@ Contributions are welcome. Pick an issue, open a PR, or start a discussion. The 
 
 ## Open-Source Credits
 
-Security scanning powered by [Trivy](https://trivy.dev/) (Aqua Security), [OWASP Dependency-Track](https://dependencytrack.org/), and [OpenSCAP](https://www.open-scap.org/). Distributed tracing via [OpenTelemetry](https://opentelemetry.io/). Search powered by [Meilisearch](https://www.meilisearch.com/). Built on [PostgreSQL](https://www.postgresql.org/).
+Security scanning powered by [Trivy](https://trivy.dev/) (Aqua Security), [OWASP Dependency-Track](https://dependencytrack.org/), and [OpenSCAP](https://www.open-scap.org/). Distributed tracing via [OpenTelemetry](https://opentelemetry.io/). Search powered by [OpenSearch](https://opensearch.org/). Built on [PostgreSQL](https://www.postgresql.org/).
 
 ## License
 
