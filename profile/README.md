@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/package%20formats-45%2B-green.svg" alt="45+ Formats" />
   <img src="https://img.shields.io/badge/rust-1.75%2B-orange.svg" alt="Rust" />
   <a href="https://sonarcloud.io/summary/overall?id=artifact-keeper_artifact-keeper"><img src="https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper&metric=alert_status" alt="Quality Gate" /></a>
-  <a href="https://ko-fi.com/bsgeraci"><img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
+  <a href="https://github.com/sponsors/artifact-keeper"><img src="https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-EA4AAA?logo=githubsponsors&logoColor=white" alt="Sponsor" /></a>
 </p>
 
 ---
