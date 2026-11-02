@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><path d="M256 24 L464 122 L464 304 Q464 375 413 425 L256 494 L99 425 Q48 375 48 304 L48 122 Z" fill="#06264B"/>
- <path d="M256 65 L420 143 L256 218 L92 143 Z" fill="white"/>
- <path d="M92 165 L256 242 L256 359 L92 282 Z" fill="#087CF4"/>
- <path d="M420 165 L256 242 L256 359 L420 282 Z" fill="#06D6E9"/>
- <path d="M97 319 L256 397 L415 319 Q411 360 380 390 L256 463 L132 390 Q101 360 97 319 Z" fill="white"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>Artifact Keeper C1 canonical symbol</title><path d="M256 32 L438 124 Q444 127 444 134 L444 269 C444 358 381 425 256 480 C131 425 68 358 68 269 L68 134 Q68 127 74 124 Z" fill="#06264B" stroke="#FFFFFF" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/><path d="M256 80 L392 146 L256 214 L120 146 Z" fill="#FFFFFF"/><path d="M116 168 L256 244 L256 336 L116 260 Z" fill="#087CF4"/><path d="M396 168 L256 244 L256 336 L396 260 Z" fill="#06D6E9"/><path d="M118 296 L256 372 L394 296 C385 345 326 398 256 434 C186 398 127 345 118 296 Z" fill="#FFFFFF"/></svg>

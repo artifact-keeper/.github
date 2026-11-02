@@ -27,13 +27,21 @@ inside it.
 | iOS app icon (opaque, full-bleed, square corners) | `app-icon-1024.png` |
 | macOS app icon (rounded, transparent corners) | `app-icon-1024-rounded.png` |
 | Other app tiles | `app-icon-{blue,light,dark}.svg`, `-192.png`, `-512.png` |
-| Browser tabs | `favicon.ico` (16 to 256), `favicon-32.png` |
+| Browser tabs | `favicon.svg`, `favicon.ico` (16 to 256), `favicon-32.png` |
+| Marks rendered below about 40 px | `symbol-small.svg` (same geometry, thicker white ring; the 16/24/32 PNGs are made from it) |
 | iOS home-screen bookmark | `apple-touch-icon.png` (180x180) |
-| Horizontal lockup (shield + wordmark) | `logo-horizontal-light.png` (light backgrounds), `logo-horizontal-dark.png` (dark backgrounds) |
+| Horizontal lockup (shield + one-line wordmark) | `logo-horizontal-light.{svg,png}` (light backgrounds), `logo-horizontal-dark.{svg,png}` (dark backgrounds); 1232x304 |
+| Stacked lockup (shield + two-line wordmark) | `logo-stacked-wordmark-light.{svg,png}`, `logo-stacked-wordmark-dark.{svg,png}`; 716x304 |
+| Geometry master and reusable paths | `source/canonical.svg`, `source/brand-components.json`, `source/wordmark-components.json`, `source/lockup-layouts.json` |
+
+"light" and "dark" name the background the file is meant for, not the colour of
+the lettering. The lockups carry 32 px of clear space on every side at native size;
+keep it, do not trim.
 
 ### Banners
 
-All banners are the same artwork at different crops (RGB, no alpha).
+All banners are the same artwork laid out for each canvas (RGB, no alpha). Each
+one ships as a PNG and as an editable SVG with outlined text.
 
 | File | Size | Target |
 |---|---|---|
@@ -55,15 +63,15 @@ https://raw.githubusercontent.com/artifact-keeper/.github/main/brand/<file>
 - Product UIs (website, web app, iOS, Android, Docker extension and so on) **vendor
   their own copies** and never hotlink raw.githubusercontent.com.
 
-## Quirks
+## Notes
 
-- `symbol-white.*` and `app-icon-dark.*` are plain silhouettes with the box detail
-  removed. They are not drop-in "white logo" versions; use them only where a
-  silhouette is wanted.
-- `logo-horizontal-{light,dark}.svg` contain live `<text>` set in DejaVu Sans, so
-  they render differently depending on installed fonts. Prefer the PNGs.
-- The lockup PNGs here are already trimmed to 828x377 (the original pack PNGs were
-  padded to 1400x1400).
+- Every SVG uses outlined paths only; nothing depends on an installed font.
+  The wordmark is a Noto Sans Bold reconstruction.
+- The monochrome symbols (`symbol-{black,white,navy,blue,cyan}.*`) are single-ink
+  outlines with a transparent interior. `symbol-white` is the one to use on dark
+  surfaces.
+- The full-colour symbol keeps an opaque navy field inside the shield so the white
+  box faces stay visible on both light and dark backgrounds.
 
 ## README header snippets
 

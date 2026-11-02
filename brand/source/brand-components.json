@@ -1,0 +1,72 @@
+{
+  "name": "Artifact Keeper C1 cleaned banner-faithful master",
+  "version": 1,
+  "viewBox": [
+    0,
+    0,
+    512,
+    512
+  ],
+  "paths": {
+    "shield": "M256 32 L438 124 Q444 127 444 134 L444 269 C444 358 381 425 256 480 C131 425 68 358 68 269 L68 134 Q68 127 74 124 Z",
+    "top": "M256 80 L392 146 L256 214 L120 146 Z",
+    "left": "M116 168 L256 244 L256 336 L116 260 Z",
+    "right": "M396 168 L256 244 L256 336 L396 260 Z",
+    "chevron": "M118 296 L256 372 L394 296 C385 345 326 398 256 434 C186 398 127 345 118 296 Z"
+  },
+  "colors": {
+    "navy": "#06264B",
+    "blue": "#087CF4",
+    "cyan": "#06D6E9",
+    "white": "#FFFFFF",
+    "black": "#000000"
+  },
+  "shield": {
+    "fill": "navy",
+    "stroke": "white",
+    "stroke_width": 8,
+    "stroke_linejoin": "round",
+    "stroke_linecap": "round"
+  },
+  "fills": {
+    "top": "white",
+    "left": "blue",
+    "right": "cyan",
+    "chevron": "white"
+  },
+  "bounds_with_stroke": [
+    64,
+    28,
+    448,
+    484
+  ],
+  "monochrome": {
+    "shield_fill": "none",
+    "stroke_width": 8,
+    "facet_center_seam": 0,
+    "note": "Open outline with three original artifact components; side faces meet as a V, retaining all geometry without adding a seam.",
+    "connected_side_path": "M116 168 L256 244 L396 168 L396 260 L256 336 L116 260 Z"
+  },
+  "notes": [
+    "Geometric reconstruction follows the supplied banner motif and proportions.",
+    "Symmetry regularized without removing the top diamond, both side faces, or lower chevron.",
+    "The full-color symbol includes an opaque navy interior field and white perimeter.",
+    "All geometry is centered around x=256."
+  ],
+  "small_sizes": {
+    "sizes": [
+      16,
+      24,
+      32
+    ],
+    "stroke_width": 14,
+    "source": "symbol-small.svg",
+    "note": "Same geometry and colors; outer rim only is optically strengthened from 8 to 14 source units."
+  },
+  "app_tile": {
+    "size": 512,
+    "corner_radius": 100,
+    "mark_transform": "translate(48 40) scale(.8125)",
+    "note": "Mark is placed 8 units above mathematical tile center for optical balance."
+  }
+}
