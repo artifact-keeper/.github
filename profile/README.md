@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/feature-graphic.png" alt="Artifact Keeper - Your packages. Your servers. Your freedom." width="100%" />
+  <img src="https://github.com/artifact-keeper/.github/raw/main/profile/banner.png" alt="Artifact Keeper - Your packages. Your servers. Your freedom." width="100%" />
 </p>
 
 <p align="center">

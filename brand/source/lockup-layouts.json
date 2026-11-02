@@ -1,0 +1,50 @@
+{
+  "logo-horizontal-light": {
+    "svg": "icons/logo-horizontal-light.svg",
+    "png": "icons/logo-horizontal-light.png",
+    "width": 1232,
+    "height": 304,
+    "visibleSymbolHeight": 240,
+    "clearspace": 32,
+    "background": "transparent",
+    "intendedSurface": "light",
+    "wordmarkFont": "Noto Sans Bold, outlined",
+    "dividerRetained": true
+  },
+  "logo-horizontal-dark": {
+    "svg": "icons/logo-horizontal-dark.svg",
+    "png": "icons/logo-horizontal-dark.png",
+    "width": 1232,
+    "height": 304,
+    "visibleSymbolHeight": 240,
+    "clearspace": 32,
+    "background": "transparent",
+    "intendedSurface": "dark",
+    "wordmarkFont": "Noto Sans Bold, outlined",
+    "dividerRetained": true
+  },
+  "logo-stacked-wordmark-light": {
+    "svg": "icons/logo-stacked-wordmark-light.svg",
+    "png": "icons/logo-stacked-wordmark-light.png",
+    "width": 716,
+    "height": 304,
+    "visibleSymbolHeight": 240,
+    "clearspace": 32,
+    "background": "transparent",
+    "intendedSurface": "light",
+    "wordmarkFont": "Noto Sans Bold, outlined",
+    "dividerRetained": true
+  },
+  "logo-stacked-wordmark-dark": {
+    "svg": "icons/logo-stacked-wordmark-dark.svg",
+    "png": "icons/logo-stacked-wordmark-dark.png",
+    "width": 716,
+    "height": 304,
+    "visibleSymbolHeight": 240,
+    "clearspace": 32,
+    "background": "transparent",
+    "intendedSurface": "dark",
+    "wordmarkFont": "Noto Sans Bold, outlined",
+    "dividerRetained": true
+  }
+}
