@@ -23,7 +23,7 @@ inside it.
 |---|---|
 | UI marks (navbars, login screens, docs headers), READMEs, any "mark on a background" | `symbol-primary.svg`, `symbol-primary-{16,24,32,48,64,96,128,256,512,1024}.png` |
 | Monochrome contexts | `symbol-{navy,blue,cyan,black}.svg`, `-256.png`, `-512.png` |
-| Avatars (GitHub org, Docker Hub, social accounts) | `app-icon-blue-512.png` |
+| Avatars (GitHub org, Docker Hub, social accounts) | `symbol-primary-512.png` (transparent mark; `app-icon-blue-512.png` if a service needs a solid background) |
 | iOS app icon (opaque, full-bleed, square corners) | `app-icon-1024.png` |
 | macOS app icon (rounded, transparent corners) | `app-icon-1024-rounded.png` |
 | Other app tiles | `app-icon-{blue,light,dark}.svg`, `-192.png`, `-512.png` |
