@@ -10,6 +10,7 @@
   <a href="https://artifactkeeper.com">Website</a> &middot;
   <a href="https://artifactkeeper.com/docs/">Docs</a> &middot;
   <a href="https://demo.artifactkeeper.com">Live Demo</a> &middot;
+  <a href="https://discord.gg/8T7NW2PeS2">Discord</a> &middot;
   <a href="https://github.com/artifact-keeper/artifact-keeper/blob/main/LICENSE">MIT Licensed</a>
 </p>
 
@@ -19,6 +20,7 @@
   <img src="https://img.shields.io/badge/package%20formats-45%2B-green.svg" alt="45+ Formats" />
   <img src="https://img.shields.io/badge/rust-1.75%2B-orange.svg" alt="Rust" />
   <a href="https://sonarcloud.io/summary/overall?id=artifact-keeper_artifact-keeper"><img src="https://sonarcloud.io/api/project_badges/measure?project=artifact-keeper_artifact-keeper&metric=alert_status" alt="Quality Gate" /></a>
+  <a href="https://discord.gg/8T7NW2PeS2"><img src="https://img.shields.io/discord/1527760136456900748?label=Discord&logo=discord&logoColor=white" alt="Discord" /></a>
   <a href="https://ko-fi.com/bsgeraci"><img src="https://img.shields.io/badge/Ko--fi-Support%20Me-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 </p>
 
@@ -346,11 +348,13 @@ graph LR
 
 ## Contributing
 
-Contributions are welcome. Pick an issue, open a PR, or start a discussion. The backend is Rust, the frontend is TypeScript/React, and the mobile apps are native Swift and Kotlin.
+Contributions are welcome. Pick an issue, open a PR, start a discussion, or say hello in `#contributing` on [Discord](https://discord.gg/8T7NW2PeS2). The backend is Rust, the frontend is TypeScript/React, and the mobile apps are native Swift and Kotlin.
 
 ## Support
 
 - Documentation: [artifactkeeper.com/docs](https://artifactkeeper.com/docs/)
+- Community chat: [Discord](https://discord.gg/8T7NW2PeS2)
+- Ideas and Q&A: [GitHub Discussions](https://github.com/artifact-keeper/artifact-keeper/discussions)
 - Email: [support@artifactkeeper.com](mailto:support@artifactkeeper.com)
 - Issues: [GitHub Issues](https://github.com/artifact-keeper/artifact-keeper/issues)
 
